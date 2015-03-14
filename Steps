@@ -67,7 +67,29 @@ Set up Devise
 	To gemfile add: 
 	gem 'devise'
 	and bundle
+	rails g devise:install
+	Follow the instructions in either the console from using the generator above or on the Devise homepage and 
 	
+	Defined default url options in environments files by putting
+	config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
+	in the config/environments/development.rb
+
+	Ensure you have defined root_url to *something* in your config/routes.rb so: 
+	root to: "home#index"
+
+	Ensure you have flash messages in app/views/layouts/application.html.erb with:
+    <p class="notice"><%= notice %></p>
+    <p class="alert"><%= alert %></p>
+
+    Copy Devise views (for customization) to your app by running:
+    rails g devise:views
+
+    Add devise to User Model with: 
+	rails g devise User
+	rake db:migrate
+	restart server
+	localhost:3000
+
 
 Create restaurant model with controllers, views and test files: 
 	rails g scaffold restaurant title:string description:text
@@ -81,7 +103,7 @@ Change root to point to the restaurants controller and the index action:
 	In routes.rb file: 
 	root "restaurants#index"
 	Check localhost:3000 in browser. Should show all the lists without need to go to /restaurants
-
+branch? 
 Generate a model for our dishs with a content row/attribute that's a string and that references the restaurant: 
 	With: 
 	rails g model dish content:string restaurant:references 
@@ -131,7 +153,7 @@ Give yourself the ability to create new restaurants with new dishs:
 	def dish_params
 		params[:dish].permit(:content)
 	end
-
+branch? 
 Now create the form to actually create a new restaurant: 
 	Create two partials (new files) in views/dishs:
 	1 _form.html.erb 
@@ -171,7 +193,7 @@ Make it so that the app can take a delete request for an item and route it to th
 		redirect_to @restaurant	
 	end
 	Check it in browser. 
-
+branch? 
 Create the ability to mark an item as complete: 
 	Add a migration to add a completed at datetime to the dishs table: 
 	In console: 
