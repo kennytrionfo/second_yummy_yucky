@@ -2,14 +2,15 @@
 = = = = = = LOG TIME  ! ! !  ! !
 
 GENERAL INFO: 
-Step by step instructions on how to build fit_right app in ruby on rails.
-These steps are copied over from fit_right, a working app on the work viao. 
+	Step by step instructions on how to build fit_right app in ruby on rails.
+	These steps are copied over from fit_right, a working app on the work viao. 
 
 TO DOs:
 - Put devise in. 
 - Add in here how add things to devise. 
 - pretty forms? 
 - Create a master T0-DOs START LIST and add commits, testing, branching etc onto it. 
+- Go back and make any scaffolds a manual process
 
 STEPS: 
 Create a new rails app:
@@ -88,11 +89,17 @@ Set up Devise
 	rails g devise User
 	rake db:migrate
 	restart server
-	localhost:3000
+	test: http://localhost:3000/users/sign_in
+
+Customize Devise signup etc forms: 
 
 
-Create restaurant model with controllers, views and test files: 
-	rails g scaffold restaurant title:string description:text
+Manually create a Restaurant Model with controllers, views and test files: 
+	Put manual process here. 
+	(for quick scaffolding skip this step and go to next step0
+
+Use Scaffolding to create a Restaurant Model with contorllers, views and test files: 
+	rails g scaffold Restaurant name:string description:text address:text comments:text
 	then
 	rake db:migrate
 	commit
