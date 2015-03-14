@@ -64,6 +64,23 @@ PUT TESTING IN HERE ALONG THE WAY!
 
 ALSO COME BACK AND ADD IN HERE INSTRUCTIONS FOR MAKING IT MOBILE READY 
 
+Manually create a Restaurant Model with controllers, views and test files: 
+	Put manual process here. 
+	(for quick scaffolding skip this step and go to next step0
+
+Use Scaffolding to create a Restaurant Model with contorllers, views and test files: 
+	(first tiem through, I set up Restaurant Model AFTER setting up Devise but I think it's good to have at least one Model set up first. Try it and see.)
+	rails g scaffold Restaurant name:string description:text address:text comments:text
+	then
+	rake db:migrate
+	commit
+	Test at localhost:3000/restaurants
+
+Change root to point to the restaurants controller and the index action: 
+	In routes.rb file: 
+	root "restaurants#index"
+	Check localhost:3000 in browser. Should show all the lists without need to go to /restaurants
+
 Set up Devise
 	To gemfile add: 
 	gem 'devise'
@@ -89,27 +106,12 @@ Set up Devise
 	rails g devise User
 	rake db:migrate
 	restart server
-	test: http://localhost:3000/users/sign_in
+	test: http://localhost:3000/users/sign_up by creating a new account. 
+	look at it in the db in rails c? just to make sure it's there? 
 
 Customize Devise signup etc forms: 
 
 
-Manually create a Restaurant Model with controllers, views and test files: 
-	Put manual process here. 
-	(for quick scaffolding skip this step and go to next step0
-
-Use Scaffolding to create a Restaurant Model with contorllers, views and test files: 
-	rails g scaffold Restaurant name:string description:text address:text comments:text
-	then
-	rake db:migrate
-	commit
-
-Confirm in localhost:3000/restaurant
-
-Change root to point to the restaurants controller and the index action: 
-	In routes.rb file: 
-	root "restaurants#index"
-	Check localhost:3000 in browser. Should show all the lists without need to go to /restaurants
 branch? 
 Generate a model for our dishs with a content row/attribute that's a string and that references the restaurant: 
 	With: 
