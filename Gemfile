@@ -1,5 +1,10 @@
 source 'https://rubygems.org'
 
+group :development do
+	  gem "better_errors"
+end
+gem "binding_of_caller" #This goes with better_errors gem and give you REPL.
+
 
 
 
