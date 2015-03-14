@@ -61,14 +61,13 @@ Install gems:
 
 PUT TESTING IN HERE ALONG THE WAY!
 
-ALSO COME BACK AND ADD IN HERE INSTRUCTIONS FOR MAKING IT MOBILE READY
-
-================================================
-========== RIGHT HERE === RIGHT NOW ============
-================================================
-Reading about and setting up devise. 
+ALSO COME BACK AND ADD IN HERE INSTRUCTIONS FOR MAKING IT MOBILE READY 
 
 Set up Devise
+	To gemfile add: 
+	gem 'devise'
+	and bundle
+	
 
 Create restaurant model with controllers, views and test files: 
 	rails g scaffold restaurant title:string description:text
