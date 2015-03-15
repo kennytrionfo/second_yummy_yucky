@@ -122,10 +122,10 @@ Make sure that each restaurant will be assigned to a user.
 	rake db:migrate
 	See changes in schema.rb file
 
-	(If you want)Connect our existing restaurants to a user by going into rails c and doing something like:
-	@restaurant = restaurant.first
+	(If you want)Connect our existing restaurant(s) to a user by going into rails c and doing something like:
+	@restaurant = Restaurant.first
 	@user = User.first 
-	@restaurant = @user
+	@restaurant.user = @user
 	@restaurant.save
 
 Branch
@@ -143,6 +143,11 @@ Do your associations for your models:
 
 	Tell the dish model that it belongs to restaurants with: 
 	belongs_to :restaurant
+
+================================================
+========== RIGHT HERE === RIGHT NOW ============
+================================================
+- When check the db in rails c, the 2nd restaurant isn't connected to the user. user_id is nil. check this out. may be fixed in coming steps. 
 
 Create some nested routes for our dishs: 
 	In routes.rb file, make restaurants resources a block with dishs resources inside:  
