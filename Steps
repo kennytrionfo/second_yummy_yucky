@@ -118,8 +118,9 @@ Make sure that each restaurant will be assigned to a user.
 	
 	Generate a migration so that the restaurant table has a user_id column: 
 	rails g migration add_user_id_to_restaurants user_id:integer:index
-	Check migration
+	See it in migration file
 	rake db:migrate
+	See changes in schema.rb file
 
 	(If you want)Connect our existing restaurants to a user by going into rails c and doing something like:
 	@restaurant = restaurant.first
