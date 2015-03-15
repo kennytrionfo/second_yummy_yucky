@@ -109,15 +109,14 @@ Set up Devise
 	test: http://localhost:3000/users/sign_up by creating a new account. 
 	look at it in the db in rails c? just to make sure it's there? 
 
-Customize Devise signup etc forms: 
-
+Customize Devise signup, update etc forms: 
 
 branch? 
 Generate a model for our dishs with a content row/attribute that's a string and that references the restaurant: 
 	With: 
 	rails g model dish content:string restaurant:references 
 	rake db:migrate
-
+  
 Do your associations for your models: 
 	Tell the restaurant model that it has many dishs: 
 	In the restaurant.rb file: 
@@ -131,7 +130,7 @@ Create some nested routes for our dishs:
 	resources :restaurants do
 		resources :dishs
 	end
-
+ 	
 Look at the routes this created: 
 	With: 
 	rake routes
