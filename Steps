@@ -11,6 +11,7 @@ TO DOs:
 - pretty forms? 
 - Create a master T0-DOs START LIST and add commits, testing, branching etc onto it. 
 - Go back and make any scaffolds a manual process
+- Add in devise extras like first and last name. 
 
 STEPS: 
 Create a new rails app:
@@ -111,17 +112,33 @@ Set up Devise
 
 Customize Devise signup etc forms: 
 
+Make sure that each restaurant will be assigned to a user. 
+	Create associations in models restaurant.rb and user.rb 
+	has_many & belongs_to
+	
+	Generate a migration so that the restaurant table has a user_id column: 
+	rails g migration add_user_id_to_restaurants user_id:integer:index
+	Check migration
+	rake db:migrate
 
-branch? 
+	(If you want)Connect our existing restaurants to a user by going into rails c and doing something like:
+	@restaurant = restaurant.first
+	@user = User.first 
+	@restaurant = @user
+	@restaurant.save
+
+Branch
+
 Generate a model for our dishs with a content row/attribute that's a string and that references the restaurant: 
 	With: 
-	rails g model dish content:string restaurant:references 
+	rails g model Dish name:string description:string vote:string restaurant:references 
 	rake db:migrate
+	check migration file and/or schema.rb file to see
 
 Do your associations for your models: 
 	Tell the restaurant model that it has many dishs: 
 	In the restaurant.rb file: 
-	has_many :dishs
+	has_many :dishes
 
 	Tell the dish model that it belongs to restaurants with: 
 	belongs_to :restaurant
