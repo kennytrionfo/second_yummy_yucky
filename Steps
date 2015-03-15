@@ -11,6 +11,7 @@ TO DOs:
 - pretty forms? 
 - Create a master T0-DOs START LIST and add commits, testing, branching etc onto it. 
 - Go back and make any scaffolds a manual process
+- Add in devise extras like first and last name. 
 
 STEPS: 
 Create a new rails app:
@@ -109,21 +110,52 @@ Set up Devise
 	test: http://localhost:3000/users/sign_up by creating a new account. 
 	look at it in the db in rails c? just to make sure it's there? 
 
+<<<<<<< HEAD
 Customize Devise signup, update etc forms: 
+=======
+Customize Devise signup etc forms: 
 
-branch? 
+Make sure that each restaurant will be assigned to a user. 
+	Create associations in models restaurant.rb and user.rb 
+	has_many & belongs_to
+	
+	Generate a migration so that the restaurant table has a user_id column: 
+	rails g migration add_user_id_to_restaurants user_id:integer:index
+	See it in migration file
+	rake db:migrate
+	See changes in schema.rb file
+
+	(If you want)Connect our existing restaurant(s) to a user by going into rails c and doing something like:
+	@restaurant = Restaurant.first
+	@user = User.first 
+	@restaurant.user = @user
+	@restaurant.save
+
+Branch
+>>>>>>> adding_dish_model
+
 Generate a model for our dishs with a content row/attribute that's a string and that references the restaurant: 
 	With: 
-	rails g model dish content:string restaurant:references 
+	rails g model Dish name:string description:string vote:string restaurant:references 
 	rake db:migrate
+<<<<<<< HEAD
   
+=======
+	check migration file and/or schema.rb file to see
+
+>>>>>>> adding_dish_model
 Do your associations for your models: 
 	Tell the restaurant model that it has many dishs: 
 	In the restaurant.rb file: 
-	has_many :dishs
+	has_many :dishes
 
 	Tell the dish model that it belongs to restaurants with: 
 	belongs_to :restaurant
+
+================================================
+========== RIGHT HERE === RIGHT NOW ============
+================================================
+- When check the db in rails c, the 2nd restaurant isn't connected to the user. user_id is nil. check this out. may be fixed in coming steps. 
 
 Create some nested routes for our dishs: 
 	In routes.rb file, make restaurants resources a block with dishs resources inside:  
