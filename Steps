@@ -155,11 +155,15 @@ Do your associations for your models:
 ================================================
 ========== RIGHT HERE === RIGHT NOW ============
 ================================================
+- Fix commit conflicts 
+- see if I have to update anything to make the vote attribute a drop down field. 
 - When check the db in rails c, the 2nd restaurant isn't connected to the user. user_id is nil. check this out. may be fixed in coming steps. 
+- Also bring up pin_board app and look at it's steps alongside this one to conjoin them. 
+
 
 Create some nested routes for our dishs: 
 	In routes.rb file, make restaurants resources a block with dishs resources inside:  
-	resources :restaurants do
+	resources :restaurants do 
 		resources :dishs
 	end
  	
