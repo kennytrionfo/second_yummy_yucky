@@ -21,4 +21,5 @@
 </p>
 
 <%= link_to 'Edit', edit_restaurant_path(@restaurant) %> |
-<%= link_to 'Back', restaurants_path %>
+<%= link_to 'Back', restaurants_path %> |
+<%= link_to "Delete", restaurant_path, method: :delete, data: {confirm: "Are you sure?"} %>

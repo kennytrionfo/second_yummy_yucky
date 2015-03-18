@@ -27,9 +27,17 @@ class RestaurantsController < ApplicationController
     respond_with(@restaurant)
   end
 
+  # def update
+  #   @restaurant.update(restaurant_params)
+  #   respond_with(@restaurant)
+  # end
+
   def update
-    @restaurant.update(restaurant_params)
-    respond_with(@restaurant)
+    if @restaurant.update(restaurant_params)
+     redirect_to @restaurant, notice: "restaurant was Successfully updated"
+    else
+     render 'edit'
+    end
   end
 
   def destroy

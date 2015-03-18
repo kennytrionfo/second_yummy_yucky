@@ -133,7 +133,7 @@ Manually create a Restaurant model with controllers, views and test files:
 		  <% if @restaurant.errors.any?  %>
 		    <div id="errors"></div>
 		    <h2></h2>
-		    <%= pluralize(@restaurant.errors.count, "error") %>
+		    <%= pluralize(@restaurant.errors.count, "ermit -m ""ror") %>
 		    prevented this restaurant from saving
 		    <ul></ul>
 		    <% @restaurant.errors.full_messages.each do |msg| %>
@@ -173,7 +173,7 @@ Manually create a Restaurant model with controllers, views and test files:
 		Then at top add following before action: 
 		before_action :find_restaurant, only: [:show, :edit, :update, :destroy]
 
-	Create a view for the show action with a new view file in views/restaurant: 
+	Create a view for the show action with a new show view file in views/restaurant: 
 		show.html.erb
 		Add following to file: 
 		%h1= @restaurant.title
@@ -211,13 +211,14 @@ Manually create a Restaurant model with controllers, views and test files:
 		Add code: 
 		<h1>Edit restaurant</h1>
 		<%= render 'form' %>
-		<%= link_to "Cancel", restaurant %>
+		<%= link_to "Cancel", restaurant_path %>
 	 
 	Add a link_to form on the show page like this: 
 		<%= link_to "Edit", edit_restaurant_path %>
-		<% add code in the destroy action to delete a restaurant & redirect to main index page:  %>
-		  @restaurant.destroy
-		  redirect_to root_path
+		Add code in the destroy action to delete a restaurant & redirect to main index page:  
+		# (this may be copied over wrong)
+		<% @restaurant.destroy %>
+		<%  redirect_to root_path %>
 		<% end %>
 
 	Now add delete button on show page: 
