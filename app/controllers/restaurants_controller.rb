@@ -1,6 +1,7 @@
 class RestaurantsController < ApplicationController
   before_action :set_restaurant, only: [:show, :edit, :update, :destroy]
 
+
   respond_to :html
 
   def index
@@ -13,7 +14,7 @@ class RestaurantsController < ApplicationController
   end
 
   def new
-    @restaurant = Restaurant.new
+    @restaurant = current_user.restaurants.build
     respond_with(@restaurant)
   end
 
@@ -21,7 +22,7 @@ class RestaurantsController < ApplicationController
   end
 
   def create
-    @restaurant = Restaurant.new(restaurant_params)
+    @restaurant = current_user.restaurants.build(restaurant_params)
     @restaurant.save
     respond_with(@restaurant)
   end

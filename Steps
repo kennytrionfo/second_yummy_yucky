@@ -4,6 +4,7 @@
 GENERAL INFO: 
 	Step by step instructions on how to build fit_right app in ruby on rails.
 	These steps are copied over from fit_right, a working app on the work viao. 
+	- This is on my IC laptop
 
 TO DOs:
 - Put devise in. 
@@ -66,9 +67,166 @@ PUT TESTING IN HERE ALONG THE WAY!
 
 ALSO COME BACK AND ADD IN HERE INSTRUCTIONS FOR MAKING IT MOBILE READY 
 
-Manually create a Restaurant Model with controllers, views and test files: 
-	Put manual process here. 
-	(for quick scaffolding skip this step and go to next step0
+Manually create a Restaurant model with controllers, views and test files: 
+	(for quick scaffolding skip this step and go to next step)
+	In console: 
+	rails g model Restaurant title:string description:text 	
+
+	Move the model over to the db: 
+		In console: 
+		rake db:migrate
+
+	Create a Restaurants controller: 
+		In console: 
+		rails g controller Restaurants 
+
+	Create an index action 
+		In restaurants_controller.rb:
+		def index
+		end
+
+	Put all the resources in the routes file as well as make the root path point to the index action in restaurants controller: 
+		-in routes.rb 
+		resources :restaurants
+		root 'restaurants#index'
+ 
+	Create a new file for the index view: 
+		In app/views/restaurant create new file called:
+		index.html.erb
+
+	Create the new and create CRUD actions in restaurants_controller.rb 
+		Start wtih this: 
+		def new
+			@restaurant = Restaurant.new
+		end
+
+		def create
+			@restaurant = Restaurant.new(restaurant_params)
+		end
+
+
+		private
+
+		def restaurant_params
+			params.require(:restaurant).permit(:title, :description)
+		end
+
+	Create a view for creating a new restaurant: 
+		In app/views/restaurant: 
+		new.html.erb
+
+	Add code in new view for a form to creat a new restaurant: 
+		In the new.html.erb file: 
+		<h1>New Form</h1>
+		<%= render 'form' %>
+		<%= link_to "Back", root_path %>
+
+	Create a form partial and use simple form gem to do it: 
+		In view/restaurant create the form partial _form.html.erb
+		Read documentation on simple_form
+		put gem in Gemfile: 
+		gem 'simple_form', '~> 3.0.2'
+		bundle
+		rails g simple_form:install --bootstrap  
+		In the form partial: 
+		<%= simple_form_for @restaurant, html: {multipart: true} do |f| %>
+		  <% if @restaurant.errors.any?  %>
+		    <div id="errors"></div>
+		    <h2></h2>
+		    <%= pluralize(@restaurant.errors.count, "error") %>
+		    prevented this restaurant from saving
+		    <ul></ul>
+		    <% @restaurant.errors.full_messages.each do |msg| %>
+		      <li>
+		        <%= msg %>
+		      </li>
+		    <% end %>
+		  <% end %>
+		  <div class="form-group">
+		    <%= f.input :image, input_html: { class: 'form-control'} %>
+		  </div>
+		  <div class="form-group">
+		    <%= f.input :title, input_html: { class: 'form-control'} %>
+		  </div>
+		  <div class="form-group">
+		    <%= f.input :description, input_html: { class: 'form-control'} %>
+		  </div>
+		  <%= f.button :submit, class: "btn btn-primary" %>
+		<% end %>
+
+	Add a flash message for when a new restaurant is created: 
+		In view/layouts, 
+		In the <body> tag and above the <%=yield: 
+		<% flash.each do |name, msg| %>
+	      <%= content_tag :div, msg, class: "alert alert-info"  %> <!-- this is bootstrap -->
+	    <% end %>
+	    Refresh and get unknow action error. url should have /restaurant/1 but we haven't defined a show action inside of our params. 
+		So in restaurantsController:  
+		def show
+		end
+
+		Because we'll have to do this for a few of our cruds, create a private method called find_restaurant for a few of the crud actions in restaurants_controller, under private, so:
+		private 
+		def find_restaurant
+			@restaurant = restaurant.find(params[:id])
+		end
+		Then at top add following before action: 
+		before_action :find_restaurant, only: [:show, :edit, :update, :destroy]
+
+	Create a view for the show action with a new view file in views/restaurant: 
+		show.html.erb
+		Add following to file: 
+		%h1= @restaurant.title
+		%p= @restaurant.description
+		Refresh, should see flash message "successfully created new restaurantt" as well as title and description. 
+
+	Now also in this view, add a link back to the home page (root path): 
+		<%= link_to "Back", root_path %>
+		Refresh to see.
+
+	List out all of the restaurants on the index page: 
+		<% @restaurants.each do |restaurant| %>
+	      <h2>
+	        <%= link_to restaurant.title, restaurant %>
+	      </h2>
+	  	<% end %>
+	  	Refresh and see NoMethodError in restaurants#index cuz it's not defined in the controller. 
+
+	Add update and destroy actions/methods to restaurant controller: 
+				def update
+					if @restaurant.update(restaurant_params)
+						redirect_to @restaurant, notice: "restaurant was Successfully updated"
+					else
+						render 'edit'
+					end
+				end
+
+				def destroy
+
+				end
+
+	Create a new file for the edit page and code for an edit form: 
+		Create new file in views/restaurants called:
+		edit.html.erb 
+		Add code: 
+		<h1>Edit restaurant</h1>
+		<%= render 'form' %>
+		<%= link_to "Cancel", restaurant %>
+	 
+	Add a link_to form on the show page like this: 
+		<%= link_to "Edit", edit_restaurant_path %>
+		<% add code in the destroy action to delete a restaurant & redirect to main index page:  %>
+		  @restaurant.destroy
+		  redirect_to root_path
+		<% end %>
+
+	Now add delete button on show page: 
+		In views/show:
+		<%= link_to "Delete", restaurant_path, method: :delete, data: {confirm: "Are you sure?"} %>
+
+	Add a "new" button on the index page:
+		In views/index:
+		<%= link_to "New restaurant", new_ %>
 
 Use Scaffolding to create a Restaurant Model with contorllers, views and test files: 
 	(first tiem through, I set up Restaurant Model AFTER setting up Devise but I think it's good to have at least one Model set up first. Try it and see.)
@@ -129,6 +287,12 @@ Make sure that each restaurant will be assigned to a user.
 	@user = User.first 
 	@restaurant.user = @user
 	@restaurant.save
+
+Update the code in the restaurants_controller to attach a restaurant with a current user: 
+	In restaurants_controller, change the @restaurant.new in both the new and the create actions to: 
+	current_user.restaurants.build
+
+
 
 Generate a model for our dishes with a name, description and vote rows/attributes and that references the restaurant: 
 	With: 

@@ -5,6 +5,7 @@ group :development do
 end
 gem "binding_of_caller" #This goes with better_errors gem and give you REPL.
 gem 'devise'
+gem 'simple_form', '~> 3.0.2'
 
 
 
