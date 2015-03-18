@@ -7,7 +7,7 @@ GENERAL INFO:
 	- This is on my IC laptop
 
 TO DOs:
-- Put devise in. 
+- Make it so that you only see your stuff when ur logged in. 
 - Add in here how add things to devise. 
 - pretty forms? 
 - Create a master T0-DOs START LIST and add commits, testing, branching etc onto it. 
@@ -293,8 +293,6 @@ Update the code in the restaurants_controller to attach a restaurant with a curr
 	In restaurants_controller, change the @restaurant.new in both the new and the create actions to: 
 	current_user.restaurants.build
 
-
-
 Generate a model for our dishes with a name, description and vote rows/attributes and that references the restaurant: 
 	With: 
 	rails g model Dish name:string description:string vote:string restaurant:references 
@@ -312,12 +310,8 @@ Do your associations for your models:
 ================================================
 ========== RIGHT HERE === RIGHT NOW ============
 ================================================
-- see if I have to update anything to make the vote attribute a drop down field. 
-- When check the db in rails c, the 2nd restaurant isn't connected to the user. user_id is nil. check this out. may be fixed in coming steps. 
-- Also bring up pin_board app and look at it's steps alongside this one to conjoin them. 
 
-
-Create some nested routes for our dishs: 
+Create some nested routes for our dishes: 
 	In routes.rb file, make restaurants resources a block with dishs resources inside:  
 	resources :restaurants do 
 		resources :dishs

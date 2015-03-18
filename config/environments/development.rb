@@ -4,6 +4,8 @@ Rails.application.configure do
 #------------Put in here for devise gem---------- Trionfo---3/14/2015--------
 config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
 
+#------------Put in here for better errors gem----------Kenny Trionfo---3/17/2015--------
+config.consider_all_requests_local = true
 
 
   # In the development environment your application's code is reloaded on
