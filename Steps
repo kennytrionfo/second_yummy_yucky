@@ -127,8 +127,8 @@ Manually create a Restaurant model with controllers, views and test files:
 		put gem in Gemfile: 
 		gem 'simple_form', '~> 3.0.2'
 		bundle
-		rails g simple_form:install --bootstrap  
-		In the form partial: 
+		rails g simple_form:install --bootstrap  #This doesn't add bootstrap, we'll add bootstrap later. 
+		In the form partial:  (this didn't work when trying to merge app, so I left out and put a simple default in, may be able to get to work later)
 		<%= simple_form_for @restaurant, html: {multipart: true} do |f| %>
 		  <% if @restaurant.errors.any?  %>
 		    <div id="errors"></div>
@@ -168,7 +168,7 @@ Manually create a Restaurant model with controllers, views and test files:
 		Because we'll have to do this for a few of our cruds, create a private method called find_restaurant for a few of the crud actions in restaurants_controller, under private, so:
 		private 
 		def find_restaurant
-			@restaurant = restaurant.find(params[:id])
+			@restaurant = Restaurant.find(params[:id])
 		end
 		Then at top add following before action: 
 		before_action :find_restaurant, only: [:show, :edit, :update, :destroy]

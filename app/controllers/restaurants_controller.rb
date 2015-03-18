@@ -1,6 +1,6 @@
 class RestaurantsController < ApplicationController
   before_action :set_restaurant, only: [:show, :edit, :update, :destroy]
-
+  before_action :find_restaurant, only: [:show, :edit, :update, :destroy]
 
   respond_to :html
 
@@ -38,6 +38,10 @@ class RestaurantsController < ApplicationController
   end
 
   private
+    def find_restaurant
+      @restaurant = Restaurant.find(params[:id])
+    end
+
     def set_restaurant
       @restaurant = Restaurant.find(params[:id])
     end
