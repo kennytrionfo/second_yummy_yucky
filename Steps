@@ -7,6 +7,7 @@ GENERAL INFO:
 	- This is on my IC laptop
 
 TO DOs:
+- Research if I need to have postgres db installed on my work laptop to do my yummy yucky.
 - Make it so that you only see your stuff when ur logged in. 
 - Add in here how add things to devise. 
 - pretty forms? 
@@ -15,7 +16,7 @@ TO DOs:
 - Add in devise extras like first and last name.  
 - Do the styling manually. 
 
-STEPS: 
+STEPS:  
 Create a new rails app:
 	skipping test unit and using Postgress DB in the installation:
 	rails new fit_right --skip-test-unit -d postgresql
@@ -299,7 +300,7 @@ Generate a model for our dishes with a name, description and vote rows/attribute
 	rake db:migrate
 
 Do your associations for your models: 
-	Tell the restaurant model that it has many dishs: 
+	Tell the restaurant model that it has many dishes: 
 	In the restaurant.rb file: 
 	has_many :dishes
 
@@ -312,9 +313,9 @@ Do your associations for your models:
 ================================================
 
 Create some nested routes for our dishes: 
-	In routes.rb file, make restaurants resources a block with dishs resources inside:  
+	In routes.rb file, make restaurants resources a block with dishes resources inside:  
 	resources :restaurants do 
-		resources :dishs
+		resources :dishes
 	end
  	
 Look at the routes this created: 
@@ -323,10 +324,10 @@ Look at the routes this created:
 
 Generate a controller for your dish: 
 	In the console with: 
-	rails g controller dishs
+	rails g controller dishes
 
-Give yourself the ability to create new restaurants with new dishs: 
-	In dishs_controller.rb, create a create method that creates a new restaurant variable/instance by setting it to a new TodoList that you find by the restaurant_id key. 
+Give yourself the ability to create new restaurants with new dishes: 
+	In dishes_controller.rb, create a create method that creates a new restaurant variable/instance by setting it to a new Restaurant that you find by the restaurant_id key. 
 	Then create a method that creates a new dish by .. 
 	with two private methods, one to set the restaurant and one to create dish params like: 
 	
@@ -349,9 +350,9 @@ Give yourself the ability to create new restaurants with new dishs:
 	end
 branch? 
 Now create the form to actually create a new restaurant: 
-	Create two partials (new files) in views/dishs:
+	Create two partials (new files) in views/dishes:
 	1 _form.html.erb 
-	<%= form_for([@restaurant, @restaurant.dishs.build]) do |f| %>
+	<%= form_for([@restaurant, @restaurant.dishes.build]) do |f| %>
 	<%= f.text_field :content, placeholder: "New Todo" %>
 	<%= f.submit %>
 	<%= end %>
@@ -360,15 +361,15 @@ Now create the form to actually create a new restaurant:
 	<p> <%= dish.content %></p>
 
 Show the todo form and the restaurant items under the restaurant show page:
-	Create a div that renders the restaurant from the _dishs.html.erb file. Under the description: 
-	<div id="dishs_wrapper">
-		<%= render @restaurant.dishs %>
+	Create a div that renders the restaurant from the _dishes.html.erb file. Under the description: 
+	<div id="dishes_wrapper">
+		<%= render @restaurant.dishes %>
 	</div>
 	Add another div inside of that div that renders the dish's form: 
 	<div id="form">
-		<%= render "dishs/form" %>
+		<%= render "dishes/form" %>
 	</div>
-	Test the show page that it shows and that you can make new dishs in a list. 
+	Test the show page that it shows and that you can make new dishes in a list. 
 
 Add a delete button for the items: 
 	Back in _dish.html.erb: 
@@ -376,9 +377,9 @@ Add a delete button for the items:
 	git commit -m ""_dish_path(@restaurant, dish.id), method: :delete, data: {confirm: "Are you sure?"} %>
 
 Make it so that the app can take a delete request for an item and route it to the right method: 
-	In dishs controller:
+	In dishes controller:
 	def destroy
-		@dish = @restaurant.dishs.find(params[:id])
+		@dish = @restaurant.dishes.find(params[:id])
 		if @dish.destroy
 			flash[:success] = "restaurant item was deleted"
 		else
@@ -389,29 +390,29 @@ Make it so that the app can take a delete request for an item and route it to th
 	Check it in browser. 
 branch? 
 Create the ability to mark an item as complete: 
-	Add a migration to add a completed at datetime to the dishs table: 
+	Add a migration to add a completed at datetime to the dishes table: 
 	In console: 
-	rails g migration add_completed_at_to_dishs completed_at:datetime
+	rails g migration add_completed_at_to_dishes completed_at:datetime
 	rake db:migrate
 
 	Add a route to give users the ability to mark an item as complete: 
 	In config/routes.rb: 
-	Make the dishs resources a block and add patch :complete. Should look like:
-	resources :dishs do
+	Make the dishes resources a block and add patch :complete. Should look like:
+	resources :dishes do
       member do
         patch :complete
       end
     end
     rake routes to see it at the top. 
 
-    In views/dishs/_dish.html.erb add:
+    In views/dishes/_dish.html.erb add:
     <%= link_to "Mark as Complete", complete_restaurant_dish_path(@restaurant, dish.id), method: :patch %>
     Test in browswer. 
 
-    Now add the complete action in the dishs controller: 
+    Now add the complete action in the dishes controller: 
     Create a private method: 
     def set_dish
-		@dish = @restaurant.dishs.find(params[:id])		
+		@dish = @restaurant.dishes.find(params[:id])		
 	end
 	We can also now remove this line from the destroy action above now that it's a private method. 
 	Now create a before action: 
@@ -460,7 +461,7 @@ Begin styling.
 
 Clean up css files and names:
 	Add .scss to application.css file in app/assets/stylesheets.
-	Delete the scaffolds, dishs and restaurants css.scss files.
+	Delete the scaffolds, dishes and restaurants css.scss files.
 	
 Create own css styling or paste in this for convenience: 
 	$white_opaque: rgba(250, 250, 250, .3);
@@ -545,7 +546,7 @@ Create own css styling or paste in this for convenience:
 		}
 	}
 
-	#dishs_wrapper {
+	#dishes_wrapper {
 		.row {
 			width: 100%;
 			border-top: 1px solid rgba(250,250,250, .3);
